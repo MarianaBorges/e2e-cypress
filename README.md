@@ -18,7 +18,7 @@ $ cd e2e-cypress
 $ npm install
 
 # Execute a aplicação
-$ yarn yarn test
+$ yarn test
 
 ```
 
