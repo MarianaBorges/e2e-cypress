@@ -1,0 +1,22 @@
+describe('Alura busca cursos',()=>{
+    beforeEach(()=>{
+        cy.visit('https://alura-fotos.herokuapp.com/')
+
+        cy.intercept('POST', 'https://apialurapic.herokuapp.com/user/login',{
+            statusCode: 400
+        }).as('stubPost');
+    })
+
+    it('fazer login de usuário válido', ()=>{
+        cy.login(Cypress.env('userName'),Cypress.env('password'));
+        cy.wait('@stubPost');
+        cy.contains('a','(Logout)').should('be.visible');
+    })
+
+    it('fazer login de usuário inválido', ()=>{
+        cy.login('maria','000');
+        cy.on('window:alert', (str) =>{
+            expect(str).to.equal('Invalid user name or password')
+        })
+    })
+})
